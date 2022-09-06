@@ -1,26 +1,36 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div class="wrapper" v-if="getFullWeather">
+<Header />
+<Main />
+</div>
+<div class="loading" v-else>
+    <div class="loading__element">
+
+    </div>
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import Header from "@/components/Header.vue"
+import Main from "@/components/Main.vue"
+import {mapGetters , mapActions} from "vuex";
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    Header, 
+    Main,
+  },
+  methods: {
+    ...mapActions(["weatherInfo"])
+  },
+  computed: {
+    ...mapGetters(["getFullWeather"])
+  },
+  created(){
+    setTimeout(() => this.weatherInfo("Moscow"), 1000)
   }
 }
-</script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+
+</script>
